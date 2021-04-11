@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const https = require('https')
 
 module.exports = {
-  name: 'search',
+  name: 's',
   description: 'Realiza una búsqueda en MercadoLibre con lo que le pases',
   execute(message, args) {
     if (!args.length) {
@@ -17,12 +17,10 @@ module.exports = {
       .get(searchURL, (resp) => {
         let data = ''
 
-        // A chunk of data has been received.
         resp.on('data', (chunk) => {
           data += chunk
         })
 
-        // The whole response has been received. Print out the result.
         resp.on('end', () => {
           const parsedData = JSON.parse(data)
           const resp = parsedData.results[0]
@@ -36,6 +34,8 @@ module.exports = {
           )
           embed.setURL(resp.permalink)
           embed.setImage(resp.thumbnail)
+          embed.setFooter('Powered by rbestardpino.xyz')
+          embed.setTimestamp()
 
           const n = parseInt(resp.seller.seller_reputation.level_id.charAt(0))
           const stars = ':star:'.repeat(n)

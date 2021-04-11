@@ -1,8 +1,9 @@
 const Discord = require('discord.js')
+require('dotenv').config()
 
 const client = new Discord.Client()
 
-const prefix = 'meli.'
+const prefix = '.'
 
 const fs = require('fs')
 
@@ -36,4 +37,4 @@ client.on('message', (message) => {
   }
 })
 
-client.login('ODMwNTY1MjE0ODI2MjY2NjM0.YHIiIg.96lnMUXZIVb1SRBLFaQ4ZdHhwGQ')
+client.login(process.env.TOKEN)
