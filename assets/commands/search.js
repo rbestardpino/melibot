@@ -23,6 +23,10 @@ module.exports = {
 
         resp.on('end', () => {
           const parsedData = JSON.parse(data)
+          if (parsedData.paging.total == 0) {
+            message.reply('No puedo buscar esas cosas :cry:')
+            return
+          }
           const resp = parsedData.results[0]
 
           const embed = new Discord.MessageEmbed()
