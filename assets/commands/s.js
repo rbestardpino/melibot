@@ -41,8 +41,11 @@ module.exports = {
           embed.setFooter('Powered by rbestardpino.xyz')
           embed.setTimestamp()
 
-          const n = parseInt(resp.seller.seller_reputation.level_id.charAt(0))
-          const stars = ':star:'.repeat(n)
+          let n
+          if (resp.seller.seller_reputation.level_id)
+            n = parseInt(resp.seller.seller_reputation.level_id.charAt(0))
+          else n = 0
+          const stars = '⭐'.repeat(n) + '✰'.repeat(5 - n)
 
           const description = `:moneybag: ***${resp.price}*** ${
             resp.currency_id

@@ -1,7 +1,7 @@
 module.exports = {
   name: 'help',
   description:
-    'Responde con la descripción de los comandos que le pases. Si no le pasas ninguno, te manda todos los comandos disponibles a tu DM',
+    'Responde con la descripción de los comandos que le pases. Si no le pasas ninguno, te manda todos los comandos disponibles',
   execute(message, args) {
     if (args.length != 0) {
       for (const arg of args) {
@@ -16,10 +16,20 @@ module.exports = {
         }
       }
     } else {
-      //TODO
-      message.member.send(
-        'Aca tenes una lista de comandos que podes usar en este bot https://youtu.be/dQw4w9WgXcQ'
-      )
+      const fs = require('fs')
+
+      const commandFiles = fs
+        .readdirSync('./assets/commands/')
+        .filter((file) => file.endsWith('.js'))
+
+      let resp = '\n'
+
+      for (const file of commandFiles) {
+        const command = require(`./${file}`)
+
+        resp += `**${command.name}**: ${command.description}\n\n`
+      }
+      message.reply(resp)
     }
   },
 }

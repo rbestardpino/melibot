@@ -20,6 +20,9 @@ for (const file of commandFiles) {
 }
 
 client.once('ready', () => {
+  client.user.setActivity('discord.js', {
+    type: 'salames no usar el bot (.help)',
+  })
   console.log('Bot initialized.')
 })
 
