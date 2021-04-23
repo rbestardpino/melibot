@@ -33,6 +33,12 @@ client.on('message', (message) => {
 
   const command = args.shift().toLowerCase()
 
+  console.log(
+    `[${new Date(Date.now()).toUTCString()}] ${message.author.username}#${
+      message.author.discriminator
+    } in ${message.guild || 'private channel'}: ${message.content}`
+  )
+
   if (client.commands.has(command)) {
     client.commands.get(command).execute(message, args)
   } else {
