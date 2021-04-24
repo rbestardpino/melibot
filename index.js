@@ -1,49 +1,43 @@
+const path = require('path')
+const fs = require('fs')
 const Discord = require('discord.js')
-require('dotenv').config()
-
 const client = new Discord.Client()
 
-const prefix = '.'
+const config = require('./config.json')
 
-const fs = require('fs')
-
-client.commands = new Discord.Collection()
-
-const commandFiles = fs
-  .readdirSync('./assets/commands/')
-  .filter((file) => file.endsWith('.js'))
-
-for (const file of commandFiles) {
-  const command = require(`./assets/commands/${file}`)
-
-  client.commands.set(command.name, command)
-}
-
-client.once('ready', () => {
-  client.user.setActivity('discord.js', {
-    type: 'salames no usar el bot (.help)',
+client.on('ready', async () => {
+  client.user.setActivity(`${config.prefix}help`, {
+    type: 'LISTENING',
   })
+
   console.log('Bot initialized.')
-})
 
-client.on('message', (message) => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return
+  const baseFile = 'command-base.js'
+  const commandBase = require(`./commands/${baseFile}`)
 
-  const args = message.content.slice(prefix.length).trim().split(/\s+/)
+  const readCommands = (dir) => {
+    const files = fs.readdirSync(path.join(__dirname, dir))
 
-  const command = args.shift().toLowerCase()
+    var descriptions = {}
 
-  console.log(
-    `[${new Date(Date.now()).toUTCString()}] ${message.author.username}#${
-      message.author.discriminator
-    } in ${message.guild || 'private channel'}: ${message.content}`
-  )
+    for (const file of files) {
+      const stat = fs.lstatSync(path.join(__dirname, dir, file))
 
-  if (client.commands.has(command)) {
-    client.commands.get(command).execute(message, args)
-  } else {
-    client.commands.get('404CommandNotFound').execute(message, args)
+      if (stat.isDirectory()) {
+        readCommands(path.join(dir, file))
+      } else if (file !== baseFile) {
+        const option = require(path.join(__dirname, dir, file))
+        if (typeof option.commands === 'string') {
+          option.commands = [option.commands]
+        }
+        descriptions[option.commands[0]] = option.description
+        commandBase(client, option)
+      }
+    }
+    fs.writeFileSync('./descriptions.json', JSON.stringify(descriptions))
   }
+
+  readCommands('commands')
 })
 
-client.login(process.env.TOKEN)
+client.login(config.token)

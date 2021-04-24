@@ -2,16 +2,12 @@ const Discord = require('discord.js')
 const https = require('https')
 
 module.exports = {
-  name: 's',
-  description: 'Realiza una búsqueda en MercadoLibre con lo que le pases',
-  execute(message, args) {
-    if (!args.length) {
-      message.reply('Mandame lo que querés que busque en Mercado Libre.')
-      return
-    }
-    const q = args.join(' ')
-
-    const searchURL = `https://api.mercadolibre.com/sites/MLA/search?q=${q}`
+  commands: ['search', 's'],
+  description: 'Realiza una búsqueda en MercadoLibre.',
+  expectedArgs: '<lo que quieras buscar en MercadoLibre>',
+  minArgs: 1,
+  callback: (message, arguments, text) => {
+    const searchURL = `https://api.mercadolibre.com/sites/MLA/search?q=${text}`
 
     https
       .get(searchURL, (resp) => {
