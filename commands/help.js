@@ -21,6 +21,9 @@ module.exports = {
       response += `**${key}**: ${value}\n`
     }
 
+    response +=
+      '\nPara más info sobre los comandos ingresá a https://top.gg/bot/830565214826266634'
+
     message.channel.send(response)
   },
 }
