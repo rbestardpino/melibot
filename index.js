@@ -6,11 +6,20 @@ const client = new Discord.Client()
 const config = require('./config.json')
 
 client.on('ready', async () => {
+  const schedule = require('node-schedule')
+
   client.user.setActivity(`${config.prefix}help`, {
     type: 'LISTENING',
   })
 
-  console.log('Bot initialized.')
+  console.log('Bot iniciado.')
+
+  const job = schedule.scheduleJob('*/40 * * * *', function () {
+    console.log(
+      'Cantidad de servidores a los que el bot pertenece: ' +
+        client.guilds.cache.size
+    )
+  })
 
   const baseFile = 'command-base.js'
   const commandBase = require(`./commands/${baseFile}`)
