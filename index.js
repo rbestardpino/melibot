@@ -12,7 +12,7 @@ client.on('ready', async () => {
     type: 'LISTENING',
   })
 
-  console.log('Bot iniciado.')
+  console.log(`Bot iniciado como ${client.user.tag}`)
 
   const job = schedule.scheduleJob('*/40 * * * *', function () {
     console.log(

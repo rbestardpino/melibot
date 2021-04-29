@@ -79,9 +79,9 @@ module.exports = (client, commandOptions) => {
         content.toLowerCase() === command
       ) {
         console.log(
-          `[${new Date(Date.now()).toUTCString()}] ${message.author.username}#${
-            message.author.discriminator
-          } in ${guild || 'private channel'}: ${content}`
+          `[${new Date(Date.now()).toUTCString()}] ${message.author.tag} in ${
+            guild || 'private channel'
+          }: ${content}`
         )
 
         for (const permission of permissions) {
