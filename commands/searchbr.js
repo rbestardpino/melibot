@@ -2,12 +2,12 @@ const Discord = require('discord.js')
 const https = require('https')
 
 module.exports = {
-  commands: ['search', 's'],
-  description: 'Realiza una búsqueda en MercadoLibre.',
-  expectedArgs: '<lo que quieras buscar en MercadoLibre>',
+  commands: ['searchbr', 'sbr'],
+  description: 'Pesquisar usando o MercadoLivre.',
+  expectedArgs: '<que deseja localizar no MercadoLibre>',
   minArgs: 1,
   callback: (message, arguments, text) => {
-    const searchURL = `https://api.mercadolibre.com/sites/MLA/search?q=${text}`
+    const searchURL = `https://api.mercadolibre.com/sites/MLB/search?q=${text}`
 
     https
       .get(searchURL, (resp) => {
@@ -20,7 +20,7 @@ module.exports = {
         resp.on('end', () => {
           const parsedData = JSON.parse(data)
           if (parsedData.paging.total == 0) {
-            message.reply('No puedo buscar esas cosas :cry:')
+            message.reply('Eu não posso procurar por essas coisas :cry:')
             return
           }
           const resp = parsedData.results[0]

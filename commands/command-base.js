@@ -72,7 +72,7 @@ module.exports = (client, commandOptions) => {
     const { member, content, guild } = message
 
     for (const alias of commands) {
-      const command = `${prefix}${alias.toLowerCase()} `
+      const command = `${prefix}${alias.toLowerCase()}`
 
       if (
         content.toLowerCase().startsWith(`${command}`) ||
