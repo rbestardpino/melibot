@@ -10,7 +10,7 @@
     "email": "root@bepi.tech"
   },
   "scripts": {
-    "start": "node .",
+    "start": "node index.js",
     "dev": "nodemon"
   },
   "dependencies": {
