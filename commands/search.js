@@ -20,7 +20,7 @@ module.exports = {
         resp.on('end', () => {
           const parsedData = JSON.parse(data)
           if (parsedData.paging.total == 0) {
-            message.reply('No puedo buscar esas cosas :cry:')
+            message.reply('No puedo buscar esas cosas 😢')
             return
           }
           const resp = parsedData.results[0]
@@ -34,7 +34,7 @@ module.exports = {
           )
           embed.setURL(resp.permalink)
           embed.setImage(resp.thumbnail)
-          embed.setFooter('Powered by rbestardpino.xyz')
+          embed.setFooter('Powered by bepi.tech')
           embed.setTimestamp()
 
           let n
@@ -43,11 +43,11 @@ module.exports = {
           else n = 0
           const stars = '⭐'.repeat(n) + '✰'.repeat(5 - n)
 
-          const description = `:moneybag: ***${resp.price}*** ${
+          const description = `💰 ***${resp.price}*** ${
             resp.currency_id
           }\n${
-            resp.shipping.free_shipping ? ':white_check_mark:' : ':x:'
-          } Free shipping\n\n:grey_question: ***${resp.condition.toUpperCase()}***\n\n:pickup_truck: ${stars}`
+            resp.shipping.free_shipping ? '✅' : '❌'
+          } Free shipping\n\n❔ ***${resp.condition.toUpperCase()}***\n\n:pickup_truck: ${stars}`
 
           embed.setDescription(description)
 

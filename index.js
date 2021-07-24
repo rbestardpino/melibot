@@ -1,24 +1,27 @@
 const path = require('path')
 const fs = require('fs')
 const Discord = require('discord.js')
+const schedule = require('node-schedule')
+const config = require('./config.json')
+require('dotenv').config()
+
 const client = new Discord.Client()
 
-const config = require('./config.json')
-
 client.on('ready', async () => {
-  const schedule = require('node-schedule')
+  console.log(`Bot iniciado como ${client.user.tag}`)
 
   client.user.setActivity(`${config.prefix}help`, {
     type: 'LISTENING',
   })
-
-  console.log(`Bot iniciado como ${client.user.tag}`)
 
   const job = schedule.scheduleJob('*/40 * * * *', function () {
     console.log(
       'Cantidad de servidores a los que el bot pertenece: ' +
         client.guilds.cache.size
     )
+    client.user.setActivity(`${config.prefix}help`, {
+      type: 'LISTENING',
+    })
   })
 
   const baseFile = 'command-base.js'
@@ -49,4 +52,20 @@ client.on('ready', async () => {
   readCommands('commands')
 })
 
-client.login(config.token)
+client.login(process.env.TOKEN)
+
+if (process.platform === 'win32') {
+  var rl = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  })
+
+  rl.on('SIGINT', function () {
+    process.emit('SIGINT')
+  })
+}
+
+process.on('SIGINT', function () {
+  console.log('Have a good mantainance work!')
+  process.exit()
+})

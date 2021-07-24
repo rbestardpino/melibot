@@ -2,16 +2,32 @@
   "name": "mercadolibre-discordbot",
   "version": "1.0.0",
   "description": "Un simple bot que sirve para hacer búsquedas en MercadoLibre dentro de Discord.",
+  "license": "ISC",
   "main": "index.js",
+  "author": {
+    "url": "https://bepi.tech",
+    "name": "BePi ©️",
+    "email": "root@bepi.tech"
+  },
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
     "node-schedule": "^2.0.0",
     "nodemon": "^2.0.7"
+  },
+  "contributors": [
+    {
+      "url": "https://rbestardpino.xyz",
+      "name": "Rodrigo Bestard Pino",
+      "email": "pacobpino@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bepi-tech/mercadolibre-discordbot"
   }
 }
